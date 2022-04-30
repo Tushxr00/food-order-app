@@ -10,8 +10,8 @@ const Header = (props) => {
         <h1>Cafe Application</h1>
         <HeaderCartButton />
       </header>
-      <div>
-        <img className={classes["main-image"]} src={mealsImage} alt="meals" />
+      <div className={classes["main-image"]}>
+        <img src={mealsImage} alt="meals" />
       </div>
     </React.Fragment>
   );
