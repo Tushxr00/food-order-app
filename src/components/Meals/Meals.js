@@ -6,8 +6,8 @@ import classes from "./Meals.module.css";
 const Meals = () => {
   return (
     <React.Fragment>
-      <AvailableMeals />
       <MealsSummary />
+      <AvailableMeals />
     </React.Fragment>
   );
 };
