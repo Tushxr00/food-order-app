@@ -12,7 +12,7 @@ const cartReducer = (state, action) => {
     const updatedTotalAmount =
       state.totalAmount + action.item.price * action.item.amount;
     return {
-      item: updatedItems,
+      items: updatedItems,
       totalAmount: updatedTotalAmount,
     };
   } else if (action.type === "Remove") {
@@ -40,7 +40,7 @@ const CartProvider = (props) => {
     addItem: addItemToCartHandler,
     removeItem: removeItemToCartHandler,
   };
-
+  console.log(cartState);
   return (
     <CartContext.Provider value={cartContext}>
       {props.children}
