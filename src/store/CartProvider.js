@@ -40,7 +40,6 @@ const CartProvider = (props) => {
     addItem: addItemToCartHandler,
     removeItem: removeItemToCartHandler,
   };
-  console.log(cartState);
   return (
     <CartContext.Provider value={cartContext}>
       {props.children}
