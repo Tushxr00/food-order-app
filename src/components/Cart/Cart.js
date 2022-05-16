@@ -6,7 +6,7 @@ import CartItem from "./CartItem";
 import CheckOut from "./CheckOut";
 
 const Cart = (props) => {
-  const [isCheckout, setIsCheckout] = useState(false)
+  const [isCheckout, setIsCheckout] = useState(false);
   const cartCtx = useContext(CartContext);
 
   const totalAmount = `$ ${cartCtx.totalAmount.toFixed(2)}`;
@@ -22,8 +22,18 @@ const Cart = (props) => {
   };
 
   const orderHandler = () => {
-    setIsCheckout(true)
-  }
+    setIsCheckout(true);
+  };
+
+  const submitOrderHandler = (userData) => {
+    fetch("https://react-http-ba40f-default-rtdb.firebaseio.com/order.json", {
+      method: "POST",
+      body: JSON.stringify({
+        user: userData,
+        orderItems: cartCtx.items,
+      }),
+    });
+  };
 
   const cartItems = (
     <ul className={classes["cart-items"]}>
@@ -40,12 +50,18 @@ const Cart = (props) => {
     </ul>
   );
 
-  const modalActions = <div className={classes.actions}>
-    <button className={classes["button--alts"]} onClick={props.onHideCart}>
-      Close
-    </button>
-    {hasItems ? <button className={classes.button} onClick={orderHandler}>Order</button> : null}
-  </div>
+  const modalActions = (
+    <div className={classes.actions}>
+      <button className={classes["button--alts"]} onClick={props.onHideCart}>
+        Close
+      </button>
+      {hasItems ? (
+        <button className={classes.button} onClick={orderHandler}>
+          Order
+        </button>
+      ) : null}
+    </div>
+  );
 
   return (
     <Modal onClick={props.onHideCart}>
@@ -54,7 +70,9 @@ const Cart = (props) => {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckout && <CheckOut onCancel={props.onHideCart}/>}
+      {isCheckout && (
+        <CheckOut onConfirm={submitOrderHandler} onCancel={props.onHideCart} />
+      )}
       {!isCheckout && modalActions}
     </Modal>
   );
